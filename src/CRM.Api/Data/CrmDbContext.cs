@@ -7,6 +7,8 @@ public class CrmDbContext(DbContextOptions<CrmDbContext> options) : DbContext(op
 {
     public DbSet<Customer> Customers => Set<Customer>();
 
+    public DbSet<Company> Companies => Set<Company>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -41,6 +43,39 @@ public class CrmDbContext(DbContextOptions<CrmDbContext> options) : DbContext(op
                 .IsRequired(false);
 
             entity.HasIndex(customer => customer.Email)
+                .IsUnique();
+        });
+
+        modelBuilder.Entity<Company>(entity =>
+        {
+            entity.ToTable("Companies");
+
+            entity.Property(company => company.Name)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            entity.Property(company => company.Industry)
+                .HasMaxLength(100);
+
+            entity.Property(company => company.Email)
+                .HasMaxLength(200);
+
+            entity.Property(company => company.Phone)
+                .HasMaxLength(30);
+
+            entity.Property(company => company.Website)
+                .HasMaxLength(300);
+
+            entity.Property(company => company.Address)
+                .HasMaxLength(500);
+
+            entity.Property(company => company.CreatedAt)
+                .IsRequired();
+
+            entity.Property(company => company.UpdatedAt)
+                .IsRequired(false);
+
+            entity.HasIndex(company => company.Name)
                 .IsUnique();
         });
     }

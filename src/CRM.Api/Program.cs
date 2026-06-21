@@ -17,6 +17,7 @@ builder.Services.AddDbContext<CrmDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
 
 var app = builder.Build();
 
