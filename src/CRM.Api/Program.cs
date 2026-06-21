@@ -1,4 +1,6 @@
 using CRM.Api.Data;
+using CRM.Api.Interfaces;
+using CRM.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<CrmDbContext>(options =>
     options.UseNpgsql(connectionString));
+
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 var app = builder.Build();
 
